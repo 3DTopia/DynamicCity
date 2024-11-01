@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    </script>
+    <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</head>
+<body>
+    <nav id="toc" class="toc"></nav>
+    <div class="content">
+        {{ content }}
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toc = document.getElementById('toc');
+        const headings = document.querySelectorAll('h2, h3');
+        const tocList = document.createElement('ul');
+
+        const tocTitle = document.createElement('h4');
+        tocTitle.textContent = 'Contents';
+        tocTitle.style.marginBottom = '10px';
+        tocTitle.style.borderBottom = '1px solid #ddd';
+        tocTitle.style.paddingBottom = '5px';
+        toc.appendChild(tocTitle);
+
+        headings.forEach(heading => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            let shortTitle = heading.textContent;
+            if (heading.textContent.includes(':')) {
+                shortTitle = heading.textContent.split(':')[0].trim();
+            } else {
+                shortTitle = heading.textContent
+                    .replace('Generation', '')
+                    .replace('Driven', '')
+                    .replace('Dynamic', '')
+                    .replace('Scene', '')
+                    .replace('-', '')
+                    .replace('Conditioned', '')
+                    .replace('Conditional', '')
+                    .trim();
+            }
+            
+            link.textContent = shortTitle;
+            link.href = `#${heading.id}`;
+            link.classList.add(`toc-${heading.tagName.toLowerCase()}`);
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+
+            if (!heading.id) {
+                heading.id = heading.textContent.toLowerCase().replace(/\s+/g, '-');
+            }
+            
+            if (heading.tagName === 'H3') {
+                heading.style.fontWeight = 'normal';
+            }
+        });
+
+        toc.appendChild(tocList);
+    });
+    </script>
+</body>
+</html>
