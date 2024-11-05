@@ -1,4 +1,4 @@
 title: "DynamicCity: Large-Scale LiDAR Generation from Dynamic Scenes"
-baseurl: ""
-url: "https://dynamic-city.github.io"
+baseurl: "/DynamicCity"
+url: "https://3DTopia.github.io"
 markdown: kramdown
