@@ -123,7 +123,7 @@ torchrun --nproc-per-node 8 train.py DiT carlasc name=DYNAMIC_CITY_DIT vae_name=
 Finally, use DiT to sample novel city scenes:
 
 ```shell
-torchrun --nproc-per-node 8 infer_dit.py -v DYNAMIC_CITY_VAE -d DYNAMIC_CITY_DIT --best_vae
+torchrun --nproc-per-node 8 infer_dit.py -d DYNAMIC_CITY_DIT --best_vae
 ```
 
 ## :cityscape: Dynamic Scene Generation
