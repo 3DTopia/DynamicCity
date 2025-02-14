@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2410.18084v1/" target='_blank'>
+  <a href="https://arxiv.org/abs/2410.18084/" target='_blank'>
     <img src="https://img.shields.io/badge/Paper-%F0%9F%93%96-darkred">
   </a>
 
