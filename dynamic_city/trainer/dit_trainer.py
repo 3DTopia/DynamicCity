@@ -21,7 +21,7 @@ from dynamic_city.utils.hexplane_utils import get_rollout_mask
 
 
 class DiTTrainer:
-    def __init__(self, conf, device):
+    def __init__(self, conf, device, load_data=True):
         self.conf = conf
         self.device = device
 
@@ -42,8 +42,10 @@ class DiTTrainer:
         self.log_frequency = conf.trainer.log_frequency
         self.ckpt_frequency = conf.trainer.ckpt_frequency
 
-        self.train_dataloader = get_hexplane_dataloaders(self.conf, self.vae_conf)
-        print_text(f'Dataset Size: {len(self.train_dataloader.dataset)}')
+        self.train_dataloader = None
+        if load_data:
+            self.train_dataloader = get_hexplane_dataloaders(self.conf, self.vae_conf)
+            print_text(f'Dataset Size: {len(self.train_dataloader.dataset)}')
 
         # pro valid mask used to calculate loss
         self.rollout_mask = get_rollout_mask(self.hex_txyz).to(self.device)  # image_size, image_size

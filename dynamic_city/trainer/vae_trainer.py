@@ -344,8 +344,8 @@ class VAETrainer:
         metrics = self.metrics[name]
         pred = get_pred_label(pred)
         if mask is not None:
-            pred = pred[~mask]
-            gt = gt[~mask]
+            pred = pred[mask != 1]
+            gt = gt[mask != 1]
         return metrics.update(pred.to(torch.int32), gt.to(torch.int32))
 
     def log_metrics_and_reset(self, name='train'):

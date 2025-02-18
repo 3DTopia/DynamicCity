@@ -78,7 +78,7 @@ Our **DynamicCity** framework consists of two key procedures: **(a)** Encoding H
 ```shell
 conda create -n dyncity python=3.10 -y
 conda activate dyncity
-conda install pytorch==2.4.0 -c pytorch -y
+conda install pytorch==2.4.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 conda install einops hydra-core matplotlib numpy omegaconf timm tqdm wandb -c conda-forge -y
 pip install flash-attn --no-build-isolation
 ```
@@ -101,6 +101,9 @@ DynamicCity
 ```
 
 ## :rocket: Getting Started
+
+You can obtain our checkpoints from [here](https://1drv.ms/f/c/29cb1a5046dedcc5/Eo1HiB44MCVEk0kJ5BNrZ-IBR6MUYd3iC4sSyl7hI7Iyxw?e=1sn7dk).
+To use the pretrained models, simply unzip `ckpts.zip` as `./ckpts` and run `infer_dit.py`.
 
 To train VAE on CarlaSC dataset, run the following command:
 

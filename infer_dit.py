@@ -22,7 +22,7 @@ from dynamic_city.diffusion import create_diffusion
 from dynamic_city.trainer.dit_trainer import DiTTrainer
 from dynamic_city.trainer.vae_trainer import VAETrainer
 from dynamic_city.utils.ckpt_utils import get_dit_ckpt, get_vae_ckpt, load_conf
-from dynamic_city.utils.dist_utils import print_text, rank_0
+from dynamic_city.utils.dist_utils import distributed, print_text, rank_0
 from dynamic_city.utils.hexplane_utils import rollout_to_hexplane
 from dynamic_city.utils.torch_utils import cleanup_dist, set_seed, set_tf32, setup_dist
 
@@ -43,7 +43,7 @@ def get_args():
     parser.add_argument('--best_vae', action='store_true')
 
     parser.add_argument('--cfg_scale', type=float, default=4.0)
-    parser.add_argument('--num_sampling_steps', type=int, default=250)
+    parser.add_argument('--num_sampling_steps', type=int, default=1000)
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
     return args
@@ -78,7 +78,7 @@ def main():
 
     # build trainer
     vae_trainer = VAETrainer(vae_conf, device)
-    dit_trainer = DiTTrainer(dit_conf, device)
+    dit_trainer = DiTTrainer(dit_conf, device, load_data=False)
 
     vae_model = vae_trainer.model
     dit_model = dit_trainer.ema.cuda().eval()
@@ -103,7 +103,8 @@ def main():
 
     start = time.time()
 
-    for sample_index in tqdm(range(rank, args.num_samples, dist.get_world_size()), disable=not rank_0()):
+    world_size = dist.get_world_size() if distributed() else 1
+    for sample_index in tqdm(range(rank, args.num_samples, world_size), disable=not rank_0()):
         hex_cond = torch.zeros(1, channels, image_size, image_size, device=device)
 
         for sequence_index in range(args.hexplane):
@@ -158,7 +159,7 @@ def main():
                     hex_cond = samples
 
                     samples = rollout_to_hexplane(samples, dit_trainer.hex_txyz)
-                    model_output = vae_model.module.decoder(samples)
+                    model_output = (vae_model.module if distributed() else vae_model).decoder(samples)
 
                     voxel = torch.softmax(model_output.to(torch.float32), dim=-1)
                     voxel = voxel.argmax(dim=-1)
