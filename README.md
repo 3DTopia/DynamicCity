@@ -1,6 +1,6 @@
 <img src="https://dynamic-city.github.io/assets/images/logo.png" width="12.5%" align="left">
 
-# DynamicCity: Large-Scale 4D Occypancy Generation from Dynamic Scenes
+# DynamicCity: Large-Scale 4D Occupancy Generation from Dynamic Scenes
 
 <p align="center">
   <a href="https://bianhengwei.com/" target="_blank">Hengwei Bian</a><sup>1,2,*</sup>&nbsp;&nbsp;&nbsp;
