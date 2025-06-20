@@ -32,7 +32,7 @@ class HexPlaneDataset(ABC, Dataset):
         hexplane = np.load(self.hexplanes[index])['rollout'].squeeze()
 
         if self.hex_cond:
-            hex_cond = np.load(self.hexplanes[index])['rollout'].squeeze()
+            hex_cond = np.load(self.conditions[index])['rollout'].squeeze()
         else:
             hex_cond = 0
 
