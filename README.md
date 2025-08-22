@@ -37,6 +37,7 @@
 
 <img src="https://dynamic-city.github.io/assets/images/teaser_small.webp" alt="Teaser" width="100%">
 
+<div style="text-align: justify;">
 Urban scene generation has been developing rapidly recently. However, existing methods primarily focus on generating
 static and single-frame scenes, overlooking the inherently dynamic nature of real-world driving environments. In this
 work, we introduce **DynamicCity**, a novel 4D occupancy generation framework capable of generating large-scale, 
@@ -53,6 +54,8 @@ the diffusion or sampling process, supporting **versatile 4D generation applicat
 command-driven generation, inpainting, and layout-conditioned generation. Extensive experiments on the CarlaSC and Waymo
 datasets demonstrate that DynamicCity significantly outperforms existing state-of-the-art 4D occupancy generation methods
 across multiple metrics. The code and models have been released to facilitate future research.
+</div>
+
 
 # Overview
 
